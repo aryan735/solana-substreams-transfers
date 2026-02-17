@@ -1,0 +1,30 @@
+python3 -c "
+content = '''specVersion: v0.1.0
+package:
+  name: solana_transfers
+  version: v0.1.0
+
+protobuf:
+  files:
+    - transfers.proto
+  importPaths:
+    - ./proto
+  excludePaths:
+    - google
+    - sf/substreams
+
+binaries:
+  default:
+    type: wasm/rust-v1
+    file: ./target/wasm32-unknown-unknown/release/solana_transfers.wasm
+
+modules:
+  - kind: map
+    name: map_transfers
+    inputs:
+      - source: sf.solana.type.v1.Block
+    output:
+      type: proto:transfers.Transfers
+'''
+open('/home/aryan07/solana-transfers/substreams.yaml', 'w').write(content)
+"
